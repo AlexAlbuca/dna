@@ -1,0 +1,131 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: "DNA"
+basePath: "/"
+paths:
+  /desenhos:
+    get:
+      summary: "Retorna uma lista de desenhos"
+      operationId: "desenhosGET"
+      parameters:
+      - name: "descricao"
+        in: "query"
+        required: false
+        type: "string"
+        x-oad-type: "parameter"
+      responses:
+        200:
+          description: "Lista de desenhos"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/desenho"
+            x-oad-type: "array"
+          x-oad-type: "response"
+      x-swagger-router-controller: "Default"
+    post:
+      summary: "Salva um desenho"
+      operationId: "desenhosPOST"
+      parameters:
+      - in: "body"
+        name: "desenho"
+        required: true
+        schema:
+          $ref: "#/definitions/desenho_novo"
+        x-oad-type: "parameter"
+      responses:
+        201:
+          description: "Retorna o location do item salvo"
+          x-oad-type: "response"
+      x-swagger-router-controller: "Default"
+    x-oad-type: "operation"
+  /desenhos/{id}:
+    get:
+      summary: "Retorna um desenho específico"
+      operationId: "desenhosIdGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+        x-oad-type: "parameter"
+      responses:
+        200:
+          description: "Retorna um desenho específico"
+          schema:
+            $ref: "#/definitions/desenho"
+          x-oad-type: "response"
+      x-swagger-router-controller: "Default"
+    x-oad-type: "operation"
+  /exportacoes/reqinfra:
+    post:
+      summary: "Retorna um xlsx com a ReqInfra"
+      operationId: "exportacoesReqinfraPOST"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      parameters:
+      - in: "body"
+        name: "xml"
+        required: true
+        schema:
+          type: "string"
+          x-oad-type: "string"
+        x-oad-type: "parameter"
+      responses:
+        200:
+          description: "ReqInfra"
+          x-oad-type: "response"
+      x-swagger-router-controller: "Default"
+    x-oad-type: "operation"
+securityDefinitions:
+  oauth2:
+    description: "oauth2"
+    type: "oauth2"
+    authorizationUrl: "https://oauth.itau.com.br/identity/connect/authorize"
+    tokenUrl: "https://oauth.itau.com.br/identity/connect/token"
+    flow: "accessCode"
+definitions:
+  desenho:
+    type: "object"
+    properties:
+      descricao:
+        type: "string"
+        x-oad-type: "string"
+      xml:
+        type: "string"
+        x-oad-type: "string"
+      autor:
+        type: "string"
+        description: "Nome do autor do desenho"
+        x-oad-type: "string"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "ID do desenho"
+        x-oad-type: "integer"
+      data_criacao:
+        type: "string"
+        description: "Data de criação no formato AAAA-MM-DD"
+        x-oad-type: "string"
+    title: "desenho"
+    example:
+      data_criacao: "data_criacao"
+      xml: "xml"
+      id: 0
+      autor: "autor"
+      descricao: "descricao"
+    x-oad-type: "object"
+  desenho_novo:
+    type: "object"
+    properties:
+      descricao:
+        type: "string"
+        x-oad-type: "string"
+      xml:
+        type: "string"
+        x-oad-type: "string"
+    x-oad-type: "object"
