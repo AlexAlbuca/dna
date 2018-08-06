@@ -11,6 +11,9 @@ WORKDIR /app
 
 RUN npm install
 RUN npm install sqlite3
+RUN npm install cors
+RUN npm i serve-static
+RUN npm i shortid
 
 RUN mkdir db
 

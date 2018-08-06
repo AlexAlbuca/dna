@@ -2,10 +2,15 @@ module.exports = {
  
     createConn: function () {
 
+        const path = require('path');
         const sqlite3 = require('sqlite3').verbose()
         var result = [];
+	
+	var dbpath = path.join(__dirname, '../db/dna.db')
+        
+	console.log(dbpath);
 
-        let dbConnect = new sqlite3.Database('db/dna.db', (err) => {
+	let dbConnect = new sqlite3.Database(dbpath, (err) => {
             if (err) {
                 console.error(err.message);
             }

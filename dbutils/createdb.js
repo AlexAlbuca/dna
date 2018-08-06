@@ -42,7 +42,8 @@ new Promise(function (resolve, reject) {
     })
     .then(function (db) {
         tableName = "diagram";
-        db.run(`CREATE TABLE ${tableName}(id  INTEGER PRIMARY KEY AUTOINCREMENT, tag TEXT, description TEXT NOT NULL, author TEXT NOT NULL, lastmodified DATETIME NOT NULL );`);
+        db.run(`CREATE TABLE ${tableName} (id  TEXT NOT NULL, xml TEXT NOT NULL,
+		tag TEXT, description TEXT NOT NULL, author TEXT NOT NULL, lastmodified DATETIME NOT NULL, PRIMARY KEY(id, lastmodified));`);
         return db;
     })
     .then(function (db) {

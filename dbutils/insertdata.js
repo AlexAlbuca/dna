@@ -19,11 +19,11 @@ new Promise(function (resolve, reject) {
         return db;
     })
     .then(function (db) {
-        tableName = "diagram";
+        /*tableName = "diagram";
         db.run(`INSERT OR IGNORE INTO ${tableName} (tag, description, author, lastmodified) VALUES (?,?,?,?)`, "web,IIS,Windows", "Arquitetura de referência Web", "Marcus Almendro", 1529065428452);
         db.run(`INSERT OR IGNORE INTO ${tableName} (tag, description, author, lastmodified) VALUES (?,?,?,?)`, "Tomcat,Linux", "Desenho do Alex", "Alex Albuquerque", 1529065428452);
         db.run(`INSERT OR IGNORE INTO ${tableName} (tag, description, author, lastmodified) VALUES (?,?,?,?)`, "Linux, Hadoop, BI", "Hadoop Arch", "Fernando Cardo", 1529065428452);
-        return db;
+*/        return db;
     })
     .then(function (db) {
         db.close((err) => {

@@ -2,12 +2,18 @@
 
 var fs = require('fs'),
     path = require('path'),
+    cors = require('cors'),
     http = require('http');
 
 var app = require('connect')();
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = 8080;
+var serveStatic = require('serve-static');
+
+app.use(cors());
+app.use(serveStatic("public"));
+
 
 // swaggerRouter configuration
 var options = {

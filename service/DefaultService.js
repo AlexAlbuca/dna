@@ -17,25 +17,24 @@ exports.desenhosGET = function(descricao) {
 
     db.serialize(function () {
 
-        db.each(`SELECT id, tag, description, author, lastmodified FROM diagram`, function (err, row) {
+        db.each(`SELECT id, xml, tag, description, author, lastmodified FROM diagram where description = ?}`, ['%' + descricao + '%'], function (err, row) {
             result.push(row);
         }, function () {
             db.close();
+	    var  sendData = {};
+	    sendData['application/json'] = result;
+
+	    if (Object.keys(sendData).length > 0) {
+	      resolve(sendData[Object.keys(sendData)[0]]);
+	    } else {
+	      resolve();
+	    }
         });
 
     });
 
-    var  sendData = {};
-    sendData['application/json'] = result;
-
-    if (Object.keys(sendData).length > 0) {
-      resolve(sendData[Object.keys(sendData)[0]]);
-    } else {
-      resolve();
-    }
   });
 }
-
 
 /**
  * Retorna um desenho específico
@@ -45,20 +44,30 @@ exports.desenhosGET = function(descricao) {
  **/
 exports.desenhosIdGET = function(id) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "data_criacao" : "data_criacao",
-  "xml" : "xml",
-  "id" : 0,
-  "autor" : "autor",
-  "descricao" : "descricao"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+
+    const sqlite3 = require('sqlite3').verbose()
+    var result = [];
+
+    var db = dbconn.createConn();
+
+    db.serialize(function () {
+
+        db.each(`SELECT id, xml FROM diagram where id = ?`, [id] , function (err, row) {
+            result.push(row);
+        }, function () {
+            db.close();
+	    var  sendData = {};
+	    sendData['application/json'] = result;
+
+	    if (Object.keys(sendData).length > 0) {
+	      resolve(sendData[Object.keys(sendData)[0]]);
+	    } else {
+	      resolve();
+	    }
+        });
+    });
+
+ });
 }
 
 
@@ -70,7 +79,28 @@ exports.desenhosIdGET = function(id) {
  **/
 exports.desenhosPOST = function(desenho) {
   return new Promise(function(resolve, reject) {
-    resolve();
+
+    const sqlite3 = require('sqlite3').verbose()
+    var result = [];
+    var shortid = require('shortid');
+
+    var db = dbconn.createConn(); 
+
+    if (desenho.id == 0){
+        desenho.id = shortid.generate();
+    }
+    console.log(desenho);
+db.serialize(function () {
+
+        db.run(`INSERT  OR IGNORE INTO diagram (id, xml, tag, description, author, lastmodified) VALUES(?,?,?,?,?,?)`,[desenho.id, desenho.xml, 'desenho', desenho.description, 'author', Date.now()], function (err) {
+		console.log(err);
+                db.close();
+                resolve();
+	    }
+        );
+
+    });
+
   });
 }
 
