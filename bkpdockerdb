@@ -1,0 +1,1 @@
+sudo docker cp dnateste:/app/db/dna.db .

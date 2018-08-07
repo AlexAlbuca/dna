@@ -18,7 +18,7 @@ exports.desenhosGET = function(descricao) {
     descricao = descricao + "%";
     db.serialize(function () {
 
-        db.each(`SELECT id, xml, tag, description as descricao, author as autor, lastmodified as data_criacao FROM diagram where description like ?`, [ descricao ], function (err, row) {
+        db.each(`SELECT id, xml, tag, description as descricao, author as autor, lastmodified as data_criacao FROM diagram where description like ? limit ?`, [ descricao, 6 ], function (err, row) {
             result.push(row);
         }, function () {
             db.close();
