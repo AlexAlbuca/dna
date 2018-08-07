@@ -15,9 +15,10 @@ exports.desenhosGET = function(descricao) {
 
     var db = dbconn.createConn();
 
+    descricao = descricao + "%";
     db.serialize(function () {
 
-        db.each(`SELECT id, xml, tag, description, author, lastmodified FROM diagram where description = ?}`, ['%' + descricao + '%'], function (err, row) {
+        db.each(`SELECT id, xml, tag, description as descricao, author as autor, lastmodified as data_criacao FROM diagram where description like ?`, [ descricao ], function (err, row) {
             result.push(row);
         }, function () {
             db.close();
@@ -46,15 +47,14 @@ exports.desenhosIdGET = function(id) {
   return new Promise(function(resolve, reject) {
 
     const sqlite3 = require('sqlite3').verbose()
-    var result = [];
+    var result = null;
 
     var db = dbconn.createConn();
 
     db.serialize(function () {
 
-        db.each(`SELECT id, xml FROM diagram where id = ?`, [id] , function (err, row) {
-            result.push(row);
-        }, function () {
+        db.get(`SELECT id, xml FROM diagram where id = ?`, [id] , function (err, row) {
+            result = row;
             db.close();
 	    var  sendData = {};
 	    sendData['application/json'] = result;
@@ -92,7 +92,7 @@ exports.desenhosPOST = function(desenho) {
     console.log(desenho);
 db.serialize(function () {
 
-        db.run(`INSERT  OR IGNORE INTO diagram (id, xml, tag, description, author, lastmodified) VALUES(?,?,?,?,?,?)`,[desenho.id, desenho.xml, 'desenho', desenho.description, 'author', Date.now()], function (err) {
+        db.run(`INSERT  OR IGNORE INTO diagram (id, xml, tag, description, author, lastmodified) VALUES(?,?,?,?,?,?)`,[desenho.id, desenho.xml, 'desenho', desenho.descricao, 'author', Date.now()], function (err) {
 		console.log(err);
                 db.close();
                 resolve();

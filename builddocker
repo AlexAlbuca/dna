@@ -1,1 +1,2 @@
+sudo docker image rm dnacore:v0.1.5 -f
 sudo docker build -t dnacore:v0.1.5 .
