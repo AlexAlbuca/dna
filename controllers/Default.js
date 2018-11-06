@@ -44,7 +44,7 @@ module.exports.exportacoesReqinfraPOST = function exportacoesReqinfraPOST (req, 
   // Add Worksheets to the workbook
   var worksheet = workbook.addWorksheet('Infraestrutura');
 
-  workbook.write('reqInfra.xlsx', res)
+  workbook.write('reqInfra.xlsx', res);
   //ubuntu2-http.eastus2.cloudapp.azure.com
   
   /*
