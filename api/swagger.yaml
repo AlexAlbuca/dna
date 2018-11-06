@@ -64,7 +64,7 @@ paths:
       summary: "Retorna um xlsx com a ReqInfra"
       operationId: "exportacoesReqinfraPOST"
       consumes:
-      - "application/xml"
+      - "x-www-form-urlencoded"
       produces:
       - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       parameters:

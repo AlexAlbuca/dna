@@ -37,7 +37,7 @@ module.exports.desenhosPOST = function desenhosPOST (req, res, next) {
 };
 
 module.exports.exportacoesReqinfraPOST = function exportacoesReqinfraPOST (req, res, next) {
-  var xml = req.swagger.params['xml'].value;
+  var xml = req.swagger.params['xml'].value; // x-www-form-urlencoded
   const excel = require('excel4node');
   
   var workbook = new excel.Workbook();
