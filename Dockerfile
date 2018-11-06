@@ -14,6 +14,7 @@ RUN npm install sqlite3
 RUN npm install cors
 RUN npm i serve-static
 RUN npm i shortid
+RUN npm i excel4node
 
 RUN mkdir db
 

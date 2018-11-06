@@ -38,6 +38,16 @@ module.exports.desenhosPOST = function desenhosPOST (req, res, next) {
 
 module.exports.exportacoesReqinfraPOST = function exportacoesReqinfraPOST (req, res, next) {
   var xml = req.swagger.params['xml'].value;
+  const excel = require('excel4node');
+  
+  var workbook = new excel.Workbook();
+  // Add Worksheets to the workbook
+  var worksheet = workbook.addWorksheet('Infraestrutura');
+
+  workbook.write('reqInfra.xlsx', res)
+  //ubuntu2-http.eastus2.cloudapp.azure.com
+  
+  /*
   Default.exportacoesReqinfraPOST(xml)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -45,4 +55,5 @@ module.exports.exportacoesReqinfraPOST = function exportacoesReqinfraPOST (req, 
     .catch(function (response) {
       utils.writeJson(res, response);
     });
+    */
 };
