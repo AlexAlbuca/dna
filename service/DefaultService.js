@@ -1,4 +1,5 @@
 'use strict';
+var excel = require("../conversors/excelgen")
 var dbconn = require("../dataservices/dbconnection")
 
 /**
@@ -113,6 +114,7 @@ db.serialize(function () {
  **/
 exports.exportacoesReqinfraPOST = function(xml) {
   return new Promise(function(resolve, reject) {
+    excel.writeXLS(res);
     resolve();
   });
 }

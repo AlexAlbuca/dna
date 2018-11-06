@@ -1,9 +1,19 @@
-var express = require('express');
-var http = require('http');
-var app = express();
-var domain = require('domain');
-var excel = require('excel4node');
-var workbook = new excel.Workbook();
+module.exports = {
+ 
+    writeXLS: function (res) {
+
+        const excel = require('excel4node');
+        var workbook = new excel.Workbook();
+        // Add Worksheets to the workbook
+        var worksheet = workbook.addWorksheet('Infraestrutura');
+
+        workbook.write('reqInfra.xlsx', res)
+
+        return;
+    }
+
+}
+/*
 
 function recursiveGetProperty(obj, lookup, callback) {
     for (property in obj) {
@@ -19,8 +29,7 @@ function getParent(obj){
     
 }
 
-// Add Worksheets to the workbook
-var worksheet = workbook.addWorksheet('Infraestrutura');
+
 
 function createExcelFile(response,root){
 
@@ -103,5 +112,5 @@ app.post('/api/v1.0/generate', function(req, res) {
     createExcelFile(res,root);
 
     res.send(JSON.stringify(results));
-       
 });
+*/       
